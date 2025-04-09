@@ -6,8 +6,8 @@ from io import BytesIO
 
 # Function to extract emails from a given PDF file
 def extract_emails_from_pdf(pdf_file):
-    # Read the PDF file from the uploaded file-like object
-    doc = fitz.open(pdf_file)
+    # Open the provided PDF using PyMuPDF from the byte content
+    doc = fitz.open(stream=pdf_file, filetype="pdf")
     emails = set()  # Using a set to avoid duplicate emails
     
     # Iterate over all pages in the PDF
