@@ -2,12 +2,11 @@ import streamlit as st
 import fitz  # PyMuPDF
 import re
 import pandas as pd
-from io import StringIO
-import os
+from io import BytesIO
 
 # Function to extract emails from a given PDF file
 def extract_emails_from_pdf(pdf_file):
-    # Open the provided PDF using PyMuPDF
+    # Read the PDF file from the uploaded file-like object
     doc = fitz.open(pdf_file)
     emails = set()  # Using a set to avoid duplicate emails
     
@@ -50,7 +49,12 @@ def main():
     if uploaded_file is not None:
         # Process the PDF file
         st.info("Processing the PDF... Please wait.")
-        emails = extract_emails_from_pdf(uploaded_file)
+        
+        # Read the uploaded file as a BytesIO object (in-memory file)
+        pdf_file = BytesIO(uploaded_file.read())
+        
+        # Extract emails from the PDF
+        emails = extract_emails_from_pdf(pdf_file)
         
         if emails:
             st.success(f"Found {len(emails)} email(s).")
