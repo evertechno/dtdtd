@@ -15,6 +15,11 @@ def extract_emails_from_pdf(pdf_file):
         page = doc.load_page(page_num)
         page_text = page.get_text("text")  # Extract text as plain text
         
+        # Debugging: Output the extracted text for the first page
+        if page_num == 0:
+            st.write("Extracted Text from the First Page:")
+            st.write(page_text[:1000])  # Display the first 1000 characters for debugging
+        
         # Regular expression to match emails
         found_emails = re.findall(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}', page_text)
         emails.update(found_emails)  # Add found emails to the set
